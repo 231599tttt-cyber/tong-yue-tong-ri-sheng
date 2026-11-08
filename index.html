@@ -103,6 +103,15 @@
       }
       .find-card .btn-primary{margin-top:16px}
       .find-note{text-align:center;font-size:13px;color:var(--ink-3);margin:14px 0 0}
+      .year-row{margin-top:12px}
+      .year-row input{
+        width:100%;min-height:64px;border:1.5px solid var(--line);border-radius:12px;
+        background:var(--bg);padding:0 12px;font-size:20px;font-weight:700;text-align:center;
+      }
+      .year-row input.invalid{border-color:var(--red);background:var(--red-soft)}
+      .year-hint{text-align:center;font-size:13.5px;color:var(--ink-3);margin:8px 0 0}
+      .find-err{display:none;text-align:center;font-size:15px;color:var(--red);margin:10px 0 0}
+      .find-err.show{display:block}
 
       /* ---------- Step 2: results ---------- */
       .view-head{margin-top:26px}
@@ -260,8 +269,8 @@
 
       <!-- Step 1: pick a birthday, nothing else -->
       <section id="viewFind" aria-label="选生日">
-        <form class="find-card" id="dateForm">
-          <label for="monthSel">你的生日（只选月和日）</label>
+        <form class="find-card" id="dateForm" novalidate>
+          <label for="monthSel">你的生日</label>
           <div class="date-row">
             <div class="field">
               <select id="monthSel" aria-label="月份"></select>
@@ -270,6 +279,11 @@
               <select id="daySel" aria-label="日期"></select>
             </div>
           </div>
+          <div class="year-row">
+            <input id="birthYearInput" type="number" inputmode="numeric" min="1930" max="2026" placeholder="出生年份，如 1998" aria-label="出生年份（可选）" />
+            <p class="year-hint">可不填，填了才能算同岁转折</p>
+          </div>
+          <p class="find-err" id="findErr"></p>
           <button type="submit" class="btn btn-primary btn-big" id="loadBtn">找同天出生的人</button>
           <p class="find-note">不用登录，点一下就能看。</p>
         </form>
@@ -332,10 +346,7 @@
           <h2 class="serif">我的转折点</h2>
           <p class="sub">正在为 <strong id="formDateLabel">—</strong> 留记录。名字默认就是「匿名」，这一页全都可以跳过。</p>
 
-          <label class="f-label" for="birthYearInput">出生年份 <span class="opt">（可选，可以跳过；填了才能算出「同岁转折」）</span></label>
-          <input class="f-input" id="birthYearInput" type="number" inputmode="numeric" min="1930" max="2026" placeholder="比如：1998，不填也行" />
-
-          <div class="ms-head">
+          <div class="ms-head" style="margin-top:0">
             <label class="f-label">人生转折点 <span class="opt">（可选，年份 + 一句话）</span></label>
             <span class="ms-count" id="msCount"></span>
           </div>
@@ -810,8 +821,26 @@
         });
 
         /* ---------- navigation ---------- */
+        var findErr = document.getElementById("findErr");
+        var birthYearEl = document.getElementById("birthYearInput");
+        birthYearEl.addEventListener("input", function () {
+          birthYearEl.classList.remove("invalid");
+          findErr.textContent = "";
+          findErr.classList.remove("show");
+        });
         document.getElementById("dateForm").addEventListener("submit", function (ev) {
           ev.preventDefault();
+          var byr = readBirthYear();
+          if (!byr.ok) {
+            birthYearEl.classList.add("invalid");
+            findErr.textContent = "出生年份填 " + YEAR_MIN + " 到 " + YEAR_MAX + " 之间的 4 位数字，或者直接留空不填。";
+            findErr.classList.add("show");
+            birthYearEl.focus();
+            return;
+          }
+          birthYearEl.classList.remove("invalid");
+          findErr.textContent = "";
+          findErr.classList.remove("show");
           var d = selectedDate();
           state.myEntry = null;
           state.myDraft = null;
