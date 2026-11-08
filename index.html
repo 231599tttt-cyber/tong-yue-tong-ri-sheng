@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>同月同日生</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#ffffff;
+        --bg-soft:#f6f4ef;
+        --card:#ffffff;
+        --ink:#1c1a17;
+        --ink-2:#55504a;
+        --ink-3:#8a8378;
+        --line:#e3ddd2;
+        --red:#bc3a26;
+        --red-dark:#9c2d1c;
+        --red-soft:#fbeae6;
+        --gold:#a97b12;
+        --gold-soft:#fbf0d3;
+        --green:#2e6b46;
+        --green-soft:#e4f0e8;
+        --shadow:0 10px 30px rgba(28,26,23,.08);
+        --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#161412;
+          --bg-soft:#1e1b18;
+          --card:#201d1a;
+          --ink:#f0ebe2;
+          --ink-2:#c6beb2;
+          --ink-3:#989083;
+          --line:#38322c;
+          --red:#e0684e;
+          --red-dark:#e0684e;
+          --red-soft:#3a211b;
+          --gold:#d9a83f;
+          --gold-soft:#332a13;
+          --green:#7fc79a;
+          --green-soft:#1d2f24;
+          --shadow:0 10px 30px rgba(0,0,0,.35);
+        }
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{
+        margin:0;background:var(--bg);color:var(--ink);
+        font-family:"Noto Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+        line-height:1.65;-webkit-font-smoothing:antialiased;
+      }
+      .serif{font-family:"Noto Serif SC","Songti SC","SimSun",serif}
+      a{color:var(--red)}
+      button,input,select,textarea{font:inherit;color:inherit}
+      :focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+      .wrap{max-width:1120px;margin:0 auto;padding:0 18px 64px}
+
+      /* ---------- Hero ---------- */
+      .hero{padding:34px 0 8px;text-align:left}
+      .hero h1{font-size:clamp(34px,7vw,56px);line-height:1.15;margin:0 0 10px;font-weight:900;letter-spacing:.02em}
+      .hero h1 .accent{color:var(--red)}
+      .hero p.lead{margin:0;color:var(--ink-2);font-size:16px;max-width:640px}
+      .hero .steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+      .hero .steps span{
+        font-size:13px;color:var(--ink-2);background:var(--bg-soft);
+        border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+      }
+      .hero .steps b{color:var(--red);font-weight:700;margin-right:4px}
+
+      /* ---------- Layout ---------- */
+      .layout{display:grid;grid-template-columns:340px 1fr;gap:22px;margin-top:26px;align-items:start}
+      @media (max-width:860px){.layout{grid-template-columns:1fr}}
+
+      /* ---------- Calendar card ---------- */
+      .cal{
+        background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        box-shadow:var(--shadow);overflow:hidden;
+      }
+      @media (min-width:861px){.cal{position:sticky;top:16px}}
+      .cal-top{
+        background:var(--red);color:#fff;text-align:center;
+        padding:12px 10px 10px;font-weight:700;letter-spacing:.35em;text-indent:.35em;font-size:15px;
+      }
+      .cal-mid{text-align:center;padding:10px 12px 4px}
+      .cal-day{font-size:104px;line-height:1;font-weight:900}
+      .cal-sub{color:var(--ink-2);font-size:14px;margin-top:2px}
+      .cal-count{margin-top:8px;font-size:13px;color:var(--ink-3)}
+      .cal-count strong{color:var(--red);font-size:16px}
+      .cal-form{padding:16px;border-top:1px dashed var(--line);margin-top:12px}
+      .cal-form label{font-size:13px;font-weight:700;display:block;margin-bottom:8px}
+      .date-row{display:flex;gap:10px}
+      .date-row .field{flex:1}
+      .date-row select{
+        width:100%;min-height:48px;border:1px solid var(--line);border-radius:10px;
+        background:var(--bg);padding:0 10px;font-size:16px;
+      }
+      .btn{
+        display:inline-flex;align-items:center;justify-content:center;gap:6px;
+        min-height:48px;padding:0 18px;border-radius:10px;border:1px solid transparent;
+        font-weight:700;cursor:pointer;font-size:15px;text-decoration:none;
+        transition:background .15s ease,transform .1s ease;
+      }
+      .btn:active{transform:scale(.98)}
+      .btn-primary{background:var(--red);color:#fff;width:100%;margin-top:12px}
+      .btn-primary:hover{background:var(--red-dark)}
+      .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+      .btn-ghost:hover{background:var(--bg-soft)}
+      .btn[disabled]{opacity:.55;cursor:not-allowed}
+      .share-box{padding:0 16px 16px}
+      .share-box .hint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
+      .share-row{display:none;gap:8px}
+      .share-row.show{display:flex}
+      .share-row input{
+        flex:1;min-width:0;min-height:44px;border:1px solid var(--line);border-radius:10px;
+        background:var(--bg-soft);padding:0 10px;font-size:12.5px;color:var(--ink-2);
+      }
+      .share-row .btn{min-height:44px;padding:0 14px;flex:none}
+
+      /* ---------- Sections ---------- */
+      .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:6px 0 14px}
+      .section-head h2{font-size:22px;margin:0;font-weight:900}
+      .section-head .note{font-size:13px;color:var(--ink-3)}
+      .status{
+        border:1px solid var(--line);background:var(--bg-soft);border-radius:10px;
+        padding:12px 14px;font-size:14px;color:var(--ink-2);margin-bottom:14px;display:none;
+      }
+      .status.show{display:block}
+      .status.error{border-color:var(--red);color:var(--red);background:var(--red-soft)}
+      .status.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+
+      /* group insights */
+      .insights{
+        background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        padding:16px 18px;margin-bottom:18px;display:none;
+      }
+      .insights.show{display:block}
+      .insights h3{margin:0 0 4px;font-size:16px}
+      .insights p.sub{margin:0 0 10px;font-size:13px;color:var(--ink-3)}
+      .insights ul{margin:0;padding:0;list-style:none}
+      .insights li{padding:8px 0;border-top:1px dashed var(--line);font-size:14.5px}
+      .insights li:first-of-type{border-top:none}
+      .insights .who{color:var(--ink-3);font-size:13px}
+
+      /* person cards */
+      .cards{display:grid;gap:16px}
+      .person{
+        background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        padding:18px;box-shadow:var(--shadow);
+      }
+      .person.is-me{border-color:var(--red);border-width:1.5px}
+      .person-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+      .avatar{
+        width:46px;height:46px;border-radius:50%;flex:none;
+        background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;
+        font-size:19px;font-weight:900;
+      }
+      .person:nth-child(3n+2) .avatar{background:#7a5c14}
+      .person:nth-child(3n) .avatar{background:#2e6b46}
+      .person-name{font-size:17px;font-weight:700;line-height:1.3}
+      .person-meta{font-size:13px;color:var(--ink-3)}
+      .me-tag{font-size:12px;background:var(--red);color:#fff;border-radius:999px;padding:2px 9px;font-weight:700}
+      .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+      .chip{font-size:12.5px;border-radius:999px;padding:3px 10px;font-weight:700;border:1px solid}
+      .chip.same-year{color:var(--gold);border-color:var(--gold);background:var(--gold-soft)}
+      .chip.same-age{color:var(--red);border-color:var(--red);background:var(--red-soft)}
+      .chip.same-born{color:var(--green);border-color:var(--green);background:var(--green-soft)}
+      .chip.none{color:var(--ink-3);border-color:var(--line);background:transparent;font-weight:400}
+
+      .timeline{margin:16px 0 0;padding:0;list-style:none;position:relative}
+      .timeline::before{
+        content:"";position:absolute;left:52px;top:6px;bottom:6px;width:2px;background:var(--line);
+      }
+      @media (max-width:480px){.timeline::before{left:44px}}
+      .timeline li{position:relative;display:flex;gap:0;padding:7px 0;align-items:flex-start}
+      .tl-year{
+        width:38px;flex:none;text-align:right;font-weight:900;font-size:16px;line-height:1.4;
+      }
+      .tl-dot{
+        width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--ink-3);
+        flex:none;margin:5px 10px 0 9px;position:relative;z-index:1;
+      }
+      @media (max-width:480px){.tl-dot{margin-left:7px;margin-right:8px}}
+      .tl-body{flex:1;min-width:0}
+      .tl-text{font-size:15px;word-break:break-word}
+      .tl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px;align-items:center}
+      .age-badge{font-size:12px;color:var(--ink-2);background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+      .hit-badge{font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px}
+      .hit-badge.year{color:var(--gold);background:var(--gold-soft)}
+      .hit-badge.age{color:var(--red);background:var(--red-soft)}
+      .timeline li.hit-year .tl-dot{border-color:var(--gold);background:var(--gold-soft)}
+      .timeline li.hit-age .tl-dot{border-color:var(--red);background:var(--red-soft)}
+      .timeline li.hit-year .tl-year{color:var(--gold)}
+      .timeline li.hit-age .tl-year{color:var(--red)}
+      .no-ms{color:var(--ink-3);font-size:14px;margin-top:12px}
+
+      .empty{
+        border:1.5px dashed var(--line);border-radius:var(--radius);padding:28px 20px;
+        text-align:center;color:var(--ink-2);display:none;background:var(--bg-soft);
+      }
+      .empty.show{display:block}
+      .empty .big{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px}
+      .skeleton{color:var(--ink-3);font-size:14px;padding:18px 4px;display:none}
+      .skeleton.show{display:block}
+
+      /* ---------- Form ---------- */
+      .form-card{
+        background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        box-shadow:var(--shadow);padding:20px;margin-top:30px;
+      }
+      .form-card h2{margin:0 0 4px;font-size:22px;font-weight:900}
+      .form-card p.sub{margin:0 0 16px;color:var(--ink-2);font-size:14px}
+      .form-card p.sub strong{color:var(--red)}
+      .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      @media (max-width:560px){.grid2{grid-template-columns:1fr}}
+      .f-label{font-size:13px;font-weight:700;display:block;margin-bottom:6px}
+      .f-label .opt{color:var(--ink-3);font-weight:400}
+      .f-input{
+        width:100%;min-height:48px;border:1px solid var(--line);border-radius:10px;
+        background:var(--bg);padding:0 12px;font-size:16px;
+      }
+      .f-input.invalid{border-color:var(--red);background:var(--red-soft)}
+      .ms-head{display:flex;align-items:baseline;justify-content:space-between;margin:20px 0 8px}
+      .ms-head .f-label{margin:0}
+      .ms-count{font-size:12.5px;color:var(--ink-3)}
+      .ms-row{display:flex;gap:8px;margin-bottom:8px}
+      .ms-row .y{width:92px;flex:none}
+      .ms-row .t{flex:1;min-width:0}
+      .ms-row .del{
+        flex:none;width:44px;min-height:48px;border:1px solid var(--line);border-radius:10px;
+        background:transparent;cursor:pointer;color:var(--ink-3);font-size:17px;line-height:1;
+      }
+      .ms-row .del:hover{color:var(--red);border-color:var(--red)}
+      .add-ms{width:100%;margin-top:2px}
+      .form-err{display:none;margin-top:12px;font-size:14px;color:var(--red)}
+      .form-err.show{display:block}
+      .privacy{margin-top:14px;font-size:12.5px;color:var(--ink-3)}
+
+      footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px}
+      @media (prefers-reduced-motion: reduce){
+        html{scroll-behavior:auto}
+        .btn{transition:none}
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <h1 class="serif">同月<span class="accent">同日</span>生</h1>
+        <p class="lead">世界上总有一些人，和你在同一天来到这个世界。选好你的生日，写下人生里几个转折点，看看同一天出生的陌生人，是不是也在同一年、同一个年纪，拐了人生的弯。</p>
+        <div class="steps" aria-hidden="true">
+          <span><b>1</b>选生日</span>
+          <span><b>2</b>写下你的转折点</span>
+          <span><b>3</b>和同日生的人对一对</span>
+        </div>
+      </header>
+
+      <div class="layout">
+        <!-- Left: calendar / picker -->
+        <aside class="cal" aria-label="生日选择">
+          <div class="cal-top serif" id="calMonthLabel">— 月</div>
+          <div class="cal-mid">
+            <div class="cal-day serif" id="calDayLabel">—</div>
+            <div class="cal-sub" id="calSubLabel">选一天，看看谁和你同一天出生</div>
+            <div class="cal-count" id="calCount"></div>
+          </div>
+          <form class="cal-form" id="dateForm">
+            <label for="monthSel">你的生日（不用填年份）</label>
+            <div class="date-row">
+              <div class="field">
+                <select id="monthSel" aria-label="月份"></select>
+              </div>
+              <div class="field">
+                <select id="daySel" aria-label="日期"></select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="loadBtn">看看这一天出生的人</button>
+          </form>
+          <div class="share-box">
+            <p class="hint">把这一天发给朋友，让 TA 也来填一填，填完你们就能互相匹配。选好日期后点下面按钮，这个日期会记进页面地址里，再把页面分享出去，朋友打开就直接是这一天。</p>
+            <button type="button" class="btn btn-ghost" id="markLinkBtn" style="width:100%">把这一天记到链接里</button>
+            <p class="hint" id="markHint" style="margin-top:8px"></p>
+          </div>
+        </aside>
+
+        <!-- Right: results + form -->
+        <main>
+          <div class="section-head">
+            <h2 class="serif" id="listTitle">这一天出生的人</h2>
+            <span class="note" id="listNote"></span>
+          </div>
+
+          <div class="status" id="statusBox" role="status"></div>
+
+          <section class="insights" id="insightsBox" aria-label="这一天的共同轨迹">
+            <h3 class="serif">这一天的共同轨迹</h3>
+            <p class="sub">不止一个人走到过的年份和年纪，往往就是这一天出生的人共同的坎。</p>
+            <ul id="insightsList"></ul>
+          </section>
+
+          <div class="skeleton" id="loadingBox">正在翻这一页日历…</div>
+
+          <div class="empty" id="emptyBox">
+            <div class="big">这一天还没有人留下记录</div>
+            <div>在下面留下你的这一页，你就是这一天的第一个人。朋友填完之后，你们就能对上彼此的转折点。</div>
+          </div>
+
+          <div class="cards" id="cardsBox"></div>
+
+          <!-- Form -->
+          <section class="form-card" id="formCard" aria-label="留下我的记录">
+            <h2 class="serif">留下我的这一页</h2>
+            <p class="sub">正在为 <strong id="formDateLabel">—</strong> 留记录。不用注册、不用登录，填完直接提交就能和上面的人匹配。</p>
+            <form id="entryForm" novalidate>
+              <div class="grid2">
+                <div>
+                  <label class="f-label" for="nicknameInput">昵称 <span class="opt">（可选，不填就是「匿名」）</span></label>
+                  <input class="f-input" id="nicknameInput" type="text" maxlength="20" placeholder="比如：小满" autocomplete="off" />
+                </div>
+                <div>
+                  <label class="f-label" for="birthYearInput">出生年份 <span class="opt">（可选，填了才能算出「同岁转折」）</span></label>
+                  <input class="f-input" id="birthYearInput" type="number" inputmode="numeric" min="1930" max="2026" placeholder="比如：1998" />
+                </div>
+              </div>
+
+              <div class="ms-head">
+                <label class="f-label">我的人生转折点 <span class="opt">（年份 + 一句话）</span></label>
+                <span class="ms-count" id="msCount"></span>
+              </div>
+              <div id="msRows"></div>
+              <button type="button" class="btn btn-ghost add-ms" id="addMsBtn">＋ 再加一条转折点</button>
+
+              <p class="form-err" id="formErr"></p>
+              <button type="submit" class="btn btn-primary" id="submitBtn" style="margin-top:16px">提交，和同日生的人对一对</button>
+              <p class="privacy">只会提交你上面填的这些：月、日、昵称、出生年份和转折点。别写手机号、真实姓名这类敏感信息——提交后同一天出生的人都能看到你这一页。</p>
+            </form>
+          </section>
+        </main>
+      </div>
+
+      <footer>
+        同月同日生 · 同一天来到世界的人，把各自的转折点放在一起看一看。
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var API = "https://script.google.com/macros/s/AKfycbwSfBpBVop07ysnC6sjIZzc397yS6C2F-8ST9zBl9g76fw5clV_vZ-kEmFdZsZ7y1Qe/exec";
+        var MAX_MS = 8;
+        var YEAR_MIN = 1930;
+        var YEAR_MAX = 2026;
+
+        var monthSel = document.getElementById("monthSel");
+        var daySel = document.getElementById("daySel");
+        var calMonthLabel = document.getElementById("calMonthLabel");
+        var calDayLabel = document.getElementById("calDayLabel");
+        var calSubLabel = document.getElementById("calSubLabel");
+        var calCount = document.getElementById("calCount");
+        var formDateLabel = document.getElementById("formDateLabel");
+        var listTitle = document.getElementById("listTitle");
+        var listNote = document.getElementById("listNote");
+        var statusBox = document.getElementById("statusBox");
+        var insightsBox = document.getElementById("insightsBox");
+        var insightsList = document.getElementById("insightsList");
+        var loadingBox = document.getElementById("loadingBox");
+        var emptyBox = document.getElementById("emptyBox");
+        var cardsBox = document.getElementById("cardsBox");
+
+        var state = {
+          month: null,
+          day: null,
+          entries: [],
+          myEntry: null,      // the entry object I submitted most recently (matched by id after reload)
+          myDraft: null,      // {nickname, birthYear, milestones:[{year,text}]} from my form, used for matching before/without id
+          loading: false
+        };
+
+        function daysInMonth(m) {
+          if (m === 2) return 29;
+          if ([4, 6, 9, 11].indexOf(m) >= 0) return 30;
+          return 31;
+        }
+        function pad(n) { return n < 10 ? "0" + n : "" + n; }
+        function esc(s) {
+          return String(s == null ? "" : s)
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        }
+        function parseMilestones(raw) {
+          if (!raw) return [];
+          var arr = raw;
+          if (typeof raw === "string") {
+            try { arr = JSON.parse(raw); } catch (e) { return []; }
+          }
+          if (!Array.isArray(arr)) return [];
+          var out = [];
+          for (var i = 0; i < arr.length; i++) {
+            var m = arr[i] || {};
+            var y = parseInt(m.year, 10);
+            var t = String(m.text == null ? "" : m.text).trim();
+            if (!isNaN(y) && t) out.push({ year: y, text: t });
+          }
+          out.sort(function (a, b) { return a.year - b.year; });
+          return out;
+        }
+        function normalizeEntry(e) {
+          var by = parseInt(e.birthYear, 10);
+          return {
+            id: String(e.id || ""),
+            nickname: String(e.nickname || "").trim() || "匿名",
+            month: parseInt(e.month, 10),
+            day: parseInt(e.day, 10),
+            birthYear: isNaN(by) ? null : by,
+            milestones: parseMilestones(e.milestones),
+            createdAt: e.createdAt || ""
+          };
+        }
+        function ageOf(entry, ms) {
+          if (!entry.birthYear) return null;
+          var a = ms.year - entry.birthYear;
+          return a >= 0 && a <= 110 ? a : null;
+        }
+
+        /* ---------- selectors ---------- */
+        function buildSelectors() {
+          var mHtml = "";
+          for (var m = 1; m <= 12; m++) mHtml += '<option value="' + m + '">' + m + ' 月</option>';
+          monthSel.innerHTML = mHtml;
+          rebuildDays(31);
+        }
+        function rebuildDays(maxDay, keep) {
+          var cur = keep || parseInt(daySel.value, 10) || 1;
+          if (cur > maxDay) cur = maxDay;
+          var dHtml = "";
+          for (var d = 1; d <= maxDay; d++) dHtml += '<option value="' + d + '">' + d + ' 日</option>';
+          daySel.innerHTML = dHtml;
+          daySel.value = cur;
+        }
+        function selectedDate() {
+          return { month: parseInt(monthSel.value, 10), day: parseInt(daySel.value, 10) };
+        }
+        function syncCalendar() {
+          var d = selectedDate();
+          state.month = d.month; state.day = d.day;
+          calMonthLabel.textContent = d.month + " 月";
+          calDayLabel.textContent = d.day;
+          calSubLabel.textContent = d.month + "月" + d.day + "日 · 同一天来到世界的人";
+          formDateLabel.textContent = d.month + " 月 " + d.day + " 日";
+          listTitle.textContent = d.month + "月" + d.day + "日出生的人";
+          document.getElementById("markHint").textContent = "";
+          try {
+            if (window.history && window.history.replaceState) {
+              window.history.replaceState(null, "", "?m=" + d.month + "&d=" + d.day);
+            }
+          } catch (e) { /* address update is a nicety, never block the page */ }
+        }
+
+        /* ---------- status ---------- */
+        function showStatus(msg, kind) {
+          statusBox.textContent = msg || "";
+          statusBox.className = "status" + (msg ? " show" : "") + (kind ? " " + kind : "");
+        }
+
+        /* ---------- matching ---------- */
+        function myProfile() {
+          // Prefer the submitted entry; fall back to what is currently typed in the form.
+          if (state.myEntry) return state.myEntry;
+          return readFormDraft(true);
+        }
+        function computeMatches(me, other) {
+          var res = { sameBorn: false, sameYear: [], sameAge: [] };
+          if (!me || !other || (me.id && other.id && me.id === other.id)) return res;
+          if (me.birthYear && other.birthYear && me.birthYear === other.birthYear) res.sameBorn = true;
+          var myYears = {}, myAges = {};
+          (me.milestones || []).forEach(function (ms) {
+            myYears[ms.year] = true;
+            var a = ageOf(me, ms);
+            if (a !== null) myAges[a] = true;
+          });
+          (other.milestones || []).forEach(function (ms) {
+            if (myYears[ms.year]) res.sameYear.push(ms.year);
+            var a = ageOf(other, ms);
+            if (a !== null && myAges[a]) res.sameAge.push(a);
+          });
+          return res;
+        }
+        function isMe(entry) {
+          return !!(state.myEntry && entry.id && entry.id === state.myEntry.id);
+        }
+
+        /* ---------- rendering ---------- */
+        function render() {
+          var entries = state.entries;
+          calCount.innerHTML = entries.length
+            ? "这一天已有 <strong>" + entries.length + "</strong> 个人留下记录"
+            : "";
+          listNote.textContent = entries.length ? "共 " + entries.length + " 人" : "";
+          loadingBox.classList.remove("show");
+          emptyBox.classList.toggle("show", entries.length === 0 && !state.loading);
+          renderInsights(entries);
+          var me = myProfile();
+          var html = "";
+          entries.forEach(function (e) { html += personHtml(e, me); });
+          cardsBox.innerHTML = html;
+        }
+        function personHtml(e, me) {
+          var mine = isMe(e);
+          var matches = mine ? { sameBorn: false, sameYear: [], sameAge: [] } : computeMatches(me, e);
+          var hitYears = {}, hitAges = {};
+          matches.sameYear.forEach(function (y) { hitYears[y] = true; });
+          matches.sameAge.forEach(function (a) { hitAges[a] = true; });
+
+          var chips = "";
+          if (mine) {
+            chips = '<span class="me-tag">这是我</span>';
+          } else if (me && (me.milestones && me.milestones.length || me.birthYear)) {
+            var parts = [];
+            if (matches.sameBorn) parts.push('<span class="chip same-born">同年出生 · 都是 ' + e.birthYear + ' 年</span>');
+            if (matches.sameYear.length) parts.push('<span class="chip same-year">同一年转折 × ' + matches.sameYear.length + '</span>');
+            if (matches.sameAge.length) parts.push('<span class="chip same-age">同岁转折 × ' + matches.sameAge.length + '</span>');
+            chips = parts.length ? parts.join("") : '<span class="chip none">暂时没有撞上的年份或年纪，轨迹各有各的走法</span>';
+          }
+
+          var tl = "";
+          if (e.milestones.length) {
+            tl = '<ul class="timeline">';
+            e.milestones.forEach(function (ms) {
+              var age = ageOf(e, ms);
+              var isYearHit = !!hitYears[ms.year];
+              var isAgeHit = age !== null && !!hitAges[age];
+              var cls = (isYearHit ? " hit-year" : "") + (isAgeHit ? " hit-age" : "");
+              var tags = "";
+              if (age !== null) tags += '<span class="age-badge">' + age + ' 岁</span>';
+              if (isYearHit && !mine) tags += '<span class="hit-badge year">和你同一年</span>';
+              if (isAgeHit && !mine) tags += '<span class="hit-badge age">和你同岁</span>';
+              tl += '<li class="' + cls.trim() + '">'
+                + '<span class="tl-year serif">' + ms.year + '</span>'
+                + '<span class="tl-dot"></span>'
+                + '<span class="tl-body"><span class="tl-text">' + esc(ms.text) + '</span>'
+                + (tags ? '<span class="tl-tags">' + tags + '</span>' : '')
+                + '</span></li>';
+            });
+            tl += "</ul>";
+          } else {
+            tl = '<p class="no-ms">TA 还没有写转折点，只留下了生日。</p>';
+          }
+
+          return '<article class="person' + (mine ? " is-me" : "") + '">'
+            + '<div class="person-head">'
+            + '<span class="avatar serif">' + esc(e.nickname.charAt(0) || "匿") + '</span>'
+            + '<span><span class="person-name">' + esc(e.nickname) + '</span><br>'
+            + '<span class="person-meta">' + (e.birthYear ? e.birthYear + " 年生 · " : "出生年份未填 · ")
+            + e.month + "月" + e.day + "日" + '</span></span>'
+            + (mine ? '<span class="me-tag">我</span>' : '')
+            + '</div>'
+            + (chips ? '<div class="chips">' + chips + '</div>' : '')
+            + tl
+            + '</article>';
+        }
+        function renderInsights(entries) {
+          if (entries.length < 2) { insightsBox.classList.remove("show"); insightsList.innerHTML = ""; return; }
+          var yearMap = {}, ageMap = {};
+          entries.forEach(function (e) {
+            var seenY = {}, seenA = {};
+            e.milestones.forEach(function (ms) {
+              if (!seenY[ms.year]) { seenY[ms.year] = true; (yearMap[ms.year] = yearMap[ms.year] || []).push(e.nickname); }
+              var a = ageOf(e, ms);
+              if (a !== null && !seenA[a]) { seenA[a] = true; (ageMap[a] = ageMap[a] || []).push(e.nickname); }
+            });
+          });
+          var items = [];
+          Object.keys(yearMap).forEach(function (y) {
+            if (yearMap[y].length >= 2) items.push({ n: yearMap[y].length, html: "<strong>" + y + " 年</strong>，有 " + yearMap[y].length + " 个人都在这一年经历了转折 <span class=\"who\">（" + esc(yearMap[y].join("、")) + "）</span>" });
+          });
+          Object.keys(ageMap).forEach(function (a) {
+            if (ageMap[a].length >= 2) items.push({ n: ageMap[a].length, html: "<strong>" + a + " 岁</strong>，有 " + ageMap[a].length + " 个人都在这个年纪拐了弯 <span class=\"who\">（" + esc(ageMap[a].join("、")) + "）</span>" });
+          });
+          items.sort(function (x, y) { return y.n - x.n; });
+          if (!items.length) { insightsBox.classList.remove("show"); insightsList.innerHTML = ""; return; }
+          insightsList.innerHTML = items.slice(0, 5).map(function (i) { return "<li>" + i.html + "</li>"; }).join("");
+          insightsBox.classList.add("show");
+        }
+
+        /* ---------- data ---------- */
+        function loadEntries(month, day, opts) {
+          opts = opts || {};
+          state.loading = true;
+          if (!opts.silent) { loadingBox.classList.add("show"); emptyBox.classList.remove("show"); }
+          showStatus("");
+          return fetch(API + "?month=" + month + "&day=" + day, { method: "GET" })
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+              if (!data || data.ok !== true || !Array.isArray(data.entries)) throw new Error("bad");
+              state.entries = data.entries.map(normalizeEntry);
+              state.loading = false;
+              // re-attach my entry if it is in the fresh list
+              if (state.myPendingMatch) {
+                var p = state.myPendingMatch;
+                var found = null;
+                for (var i = state.entries.length - 1; i >= 0; i--) {
+                  var e = state.entries[i];
+                  if (e.nickname === p.nickname && e.birthYear === p.birthYear) { found = e; break; }
+                }
+                if (found) state.myEntry = found;
+                state.myPendingMatch = null;
+              }
+              render();
+              return state.entries;
+            })
+            .catch(function () {
+              state.loading = false;
+              loadingBox.classList.remove("show");
+              showStatus("没能打开这一页，可能是网络问题。点上面的按钮再试一次。", "error");
+              throw new Error("load-failed");
+            });
+        }
+
+        /* ---------- milestone form rows ---------- */
+        var msRows = document.getElementById("msRows");
+        var msCount = document.getElementById("msCount");
+        var addMsBtn = document.getElementById("addMsBtn");
+        function msRowHtml() {
+          return '<div class="ms-row">'
+            + '<input class="f-input y" type="number" inputmode="numeric" min="' + YEAR_MIN + '" max="' + YEAR_MAX + '" placeholder="年份" aria-label="转折点年份" />'
+            + '<input class="f-input t" type="text" maxlength="60" placeholder="比如：第一次离开家，去外地读书" aria-label="转折点内容" />'
+            + '<button type="button" class="del" aria-label="删掉这一条">×</button>'
+            + '</div>';
+        }
+        function refreshMsUi() {
+          var rows = msRows.querySelectorAll(".ms-row");
+          msCount.textContent = "已加 " + rows.length + " 条 / 最多 " + MAX_MS + " 条";
+          addMsBtn.style.display = rows.length >= MAX_MS ? "none" : "";
+          rows.forEach(function (r) {
+            r.querySelector(".del").style.visibility = rows.length > 1 ? "visible" : "hidden";
+          });
+        }
+        function addMsRow(year, text) {
+          if (msRows.querySelectorAll(".ms-row").length >= MAX_MS) return;
+          var div = document.createElement("div");
+          div.innerHTML = msRowHtml();
+          var row = div.firstChild;
+          if (year) row.querySelector(".y").value = year;
+          if (text) row.querySelector(".t").value = text;
+          msRows.appendChild(row);
+          refreshMsUi();
+        }
+        msRows.addEventListener("click", function (ev) {
+          var btn = ev.target.closest ? ev.target.closest(".del") : null;
+          if (!btn) return;
+          var row = btn.closest(".ms-row");
+          if (row && msRows.querySelectorAll(".ms-row").length > 1) { row.remove(); refreshMsUi(); render(); }
+        });
+        msRows.addEventListener("input", function () { render(); });
+        addMsBtn.addEventListener("click", function () {
+          addMsRow();
+          var rows = msRows.querySelectorAll(".ms-row");
+          var last = rows[rows.length - 1];
+          if (last) last.querySelector(".y").focus();
+        });
+        function readFormDraft(loose) {
+          var by = parseInt(document.getElementById("birthYearInput").value, 10);
+          var draft = {
+            id: state.myEntry ? state.myEntry.id : "",
+            nickname: document.getElementById("nicknameInput").value.trim() || "匿名",
+            birthYear: isNaN(by) ? null : by,
+            milestones: []
+          };
+          msRows.querySelectorAll(".ms-row").forEach(function (row) {
+            var y = parseInt(row.querySelector(".y").value, 10);
+            var t = row.querySelector(".t").value.trim();
+            if (!isNaN(y) && t) draft.milestones.push({ year: y, text: t });
+          });
+          return draft;
+        }
+
+        /* ---------- submit ---------- */
+        var entryForm = document.getElementById("entryForm");
+        var formErr = document.getElementById("formErr");
+        var submitBtn = document.getElementById("submitBtn");
+        function showFormErr(msg) {
+          formErr.textContent = msg || "";
+          formErr.classList.toggle("show", !!msg);
+        }
+        entryForm.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          showFormErr("");
+          var d = selectedDate();
+          var byRaw = document.getElementById("birthYearInput").value.trim();
+          var by = byRaw === "" ? null : parseInt(byRaw, 10);
+          if (byRaw !== "" && (isNaN(by) || by < YEAR_MIN || by > YEAR_MAX)) {
+            showFormErr("出生年份填 " + YEAR_MIN + " 到 " + YEAR_MAX + " 之间的数字，或者留空。");
+            return;
+          }
+          var milestones = [];
+          var bad = false;
+          msRows.querySelectorAll(".ms-row").forEach(function (row) {
+            var yEl = row.querySelector(".y"), tEl = row.querySelector(".t");
+            yEl.classList.remove("invalid"); tEl.classList.remove("invalid");
+            var yv = yEl.value.trim(), tv = tEl.value.trim();
+            if (yv === "" && tv === "") return;
+            var y = parseInt(yv, 10);
+            if (yv === "" || isNaN(y) || y < YEAR_MIN || y > YEAR_MAX) { yEl.classList.add("invalid"); bad = true; return; }
+            if (tv === "") { tEl.classList.add("invalid"); bad = true; return; }
+            if (by && y < by) { yEl.classList.add("invalid"); bad = true; return; }
+            milestones.push({ year: y, text: tv });
+          });
+          if (bad) {
+            showFormErr("转折点里有没填完整的：年份要在 " + YEAR_MIN + "–" + YEAR_MAX + " 之间、不能早于出生年份，内容也要写上；整行留空则会忽略。");
+            return;
+          }
+          milestones.sort(function (a, b) { return a.year - b.year; });
+          if (milestones.length > MAX_MS) milestones = milestones.slice(0, MAX_MS);
+          var nickname = document.getElementById("nicknameInput").value.trim() || "匿名";
+          var payload = { month: d.month, day: d.day, nickname: nickname, birthYear: by || "", milestones: milestones };
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "正在留下这一页…";
+          fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify(payload)
+          }).catch(function () { /* per spec: do not rely on POST response */ })
+            .then(function () {
+              return new Promise(function (res) { setTimeout(res, 1500); });
+            })
+            .then(function () {
+              state.myPendingMatch = { nickname: nickname, birthYear: by };
+              state.myDraft = { nickname: nickname, birthYear: by, milestones: milestones };
+              return loadEntries(d.month, d.day, { silent: true });
+            })
+            .then(function () {
+              submitBtn.disabled = false;
+              submitBtn.textContent = "提交，和同日生的人对一对";
+              if (state.myEntry) {
+                showStatus("提交好了，你就是 " + d.month + "月" + d.day + "日这一页上的人了。下面标红、标金的，就是和你撞上的年份和年纪。", "ok");
+              } else {
+                showStatus("已经提交，列表正在刷新。如果还没看到你这一页，稍等几秒再点一次「看看这一天出生的人」。", "ok");
+                if (!state.myEntry) {
+                  // fall back to draft-based matching so highlights still work
+                  state.myEntry = null;
+                }
+              }
+              document.getElementById("listTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+            })
+            .catch(function () {
+              submitBtn.disabled = false;
+              submitBtn.textContent = "提交，和同日生的人对一对";
+              showFormErr("提交后刷新列表失败，可能是网络问题。先别重复提交，点上面「看看这一天出生的人」确认一下有没有你这一页。");
+            });
+        });
+
+        /* ---------- date form / picker ---------- */
+        document.getElementById("dateForm").addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          var d = selectedDate();
+          state.myEntry = null;
+          syncCalendar();
+          loadEntries(d.month, d.day).catch(function () {});
+        });
+        monthSel.addEventListener("change", function () {
+          rebuildDays(daysInMonth(parseInt(monthSel.value, 10)), parseInt(daySel.value, 10));
+          var d = selectedDate();
+          state.myEntry = null;
+          syncCalendar();
+          loadEntries(d.month, d.day).catch(function () {});
+        });
+        daySel.addEventListener("change", function () {
+          var d = selectedDate();
+          state.myEntry = null;
+          syncCalendar();
+          loadEntries(d.month, d.day).catch(function () {});
+        });
+        document.getElementById("birthYearInput").addEventListener("input", function () { render(); });
+        document.getElementById("nicknameInput").addEventListener("input", function () { render(); });
+
+        /* ---------- dated link (?m=&d=) ---------- */
+        document.getElementById("markLinkBtn").addEventListener("click", function () {
+          var d = selectedDate();
+          var ok = false;
+          try {
+            if (window.history && window.history.replaceState) {
+              window.history.replaceState(null, "", "?m=" + d.month + "&d=" + d.day);
+              ok = true;
+            }
+          } catch (e) { ok = false; }
+          document.getElementById("markHint").textContent = ok
+            ? "记好了：页面地址已经带上 " + d.month + "月" + d.day + "日（?m=" + d.month + "&d=" + d.day + "）。现在把这个页面分享给朋友，TA 打开就直接看到这一天的人。"
+            : "这个日期是 " + d.month + "月" + d.day + "日。分享时在链接后面加上 ?m=" + d.month + "&d=" + d.day + "，朋友打开就直接是这一天。";
+        });
+
+        /* ---------- init ---------- */
+        buildSelectors();
+        var params = new URLSearchParams(window.location.search);
+        var pm = parseInt(params.get("m"), 10), pd = parseInt(params.get("d"), 10);
+        var now = new Date();
+        var initM = (!isNaN(pm) && pm >= 1 && pm <= 12) ? pm : (now.getMonth() + 1);
+        var initD = (!isNaN(pd) && pd >= 1 && pd <= daysInMonth(initM)) ? pd : Math.min(now.getDate(), daysInMonth(initM));
+        monthSel.value = initM;
+        rebuildDays(daysInMonth(initM), initD);
+        daySel.value = initD;
+        syncCalendar();
+        addMsRow(); addMsRow(); addMsRow();
+        refreshMsUi();
+        loadEntries(initM, initD).catch(function () {});
+      })();
+    </script>
+  </body>
+</html>
