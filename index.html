@@ -52,102 +52,101 @@
       body{
         margin:0;background:var(--bg);color:var(--ink);
         font-family:"Noto Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-        line-height:1.65;-webkit-font-smoothing:antialiased;
+        line-height:1.65;-webkit-font-smoothing:antialiased;font-size:17px;
       }
       .serif{font-family:"Noto Serif SC","Songti SC","SimSun",serif}
       a{color:var(--red)}
       button,input,select,textarea{font:inherit;color:inherit}
       :focus-visible{outline:2px solid var(--red);outline-offset:2px}
+      [hidden]{display:none !important}
 
-      .wrap{max-width:1120px;margin:0 auto;padding:0 18px 64px}
+      .wrap{max-width:680px;margin:0 auto;padding:0 18px 56px}
 
       /* ---------- Hero ---------- */
-      .hero{padding:34px 0 8px;text-align:left}
-      .hero h1{font-size:clamp(34px,7vw,56px);line-height:1.15;margin:0 0 10px;font-weight:900;letter-spacing:.02em}
+      .hero{padding:36px 0 4px;text-align:center}
+      .hero h1{font-size:clamp(38px,9vw,54px);line-height:1.15;margin:0 0 10px;font-weight:900;letter-spacing:.02em}
       .hero h1 .accent{color:var(--red)}
-      .hero p.lead{margin:0;color:var(--ink-2);font-size:16px;max-width:640px}
-      .hero .steps{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-      .hero .steps span{
-        font-size:13px;color:var(--ink-2);background:var(--bg-soft);
-        border:1px solid var(--line);border-radius:999px;padding:5px 12px;
-      }
-      .hero .steps b{color:var(--red);font-weight:700;margin-right:4px}
+      .hero p.lead{margin:0 auto;color:var(--ink-2);font-size:16.5px;max-width:520px}
 
-      /* ---------- Layout ---------- */
-      .layout{display:grid;grid-template-columns:340px 1fr;gap:22px;margin-top:26px;align-items:start}
-      @media (max-width:860px){.layout{grid-template-columns:1fr}}
-
-      /* ---------- Calendar card ---------- */
-      .cal{
-        background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-        box-shadow:var(--shadow);overflow:hidden;
-      }
-      @media (min-width:861px){.cal{position:sticky;top:16px}}
-      .cal-top{
-        background:var(--red);color:#fff;text-align:center;
-        padding:12px 10px 10px;font-weight:700;letter-spacing:.35em;text-indent:.35em;font-size:15px;
-      }
-      .cal-mid{text-align:center;padding:10px 12px 4px}
-      .cal-day{font-size:104px;line-height:1;font-weight:900}
-      .cal-sub{color:var(--ink-2);font-size:14px;margin-top:2px}
-      .cal-count{margin-top:8px;font-size:13px;color:var(--ink-3)}
-      .cal-count strong{color:var(--red);font-size:16px}
-      .cal-form{padding:16px;border-top:1px dashed var(--line);margin-top:12px}
-      .cal-form label{font-size:13px;font-weight:700;display:block;margin-bottom:8px}
-      .date-row{display:flex;gap:10px}
-      .date-row .field{flex:1}
-      .date-row select{
-        width:100%;min-height:48px;border:1px solid var(--line);border-radius:10px;
-        background:var(--bg);padding:0 10px;font-size:16px;
-      }
+      /* ---------- Buttons ---------- */
       .btn{
         display:inline-flex;align-items:center;justify-content:center;gap:6px;
-        min-height:48px;padding:0 18px;border-radius:10px;border:1px solid transparent;
-        font-weight:700;cursor:pointer;font-size:15px;text-decoration:none;
+        min-height:56px;padding:0 20px;border-radius:12px;border:1px solid transparent;
+        font-weight:700;cursor:pointer;font-size:17px;text-decoration:none;
         transition:background .15s ease,transform .1s ease;
       }
       .btn:active{transform:scale(.98)}
-      .btn-primary{background:var(--red);color:#fff;width:100%;margin-top:12px}
+      .btn-big{min-height:62px;font-size:19px;width:100%}
+      .btn-primary{background:var(--red);color:#fff}
       .btn-primary:hover{background:var(--red-dark)}
       .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
       .btn-ghost:hover{background:var(--bg-soft)}
+      .btn-block{width:100%}
       .btn[disabled]{opacity:.55;cursor:not-allowed}
-      .share-box{padding:0 16px 16px}
-      .share-box .hint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
-      .share-row{display:none;gap:8px}
-      .share-row.show{display:flex}
-      .share-row input{
-        flex:1;min-width:0;min-height:44px;border:1px solid var(--line);border-radius:10px;
-        background:var(--bg-soft);padding:0 10px;font-size:12.5px;color:var(--ink-2);
+      .btn-link{
+        background:none;border:none;padding:6px 4px;cursor:pointer;
+        color:var(--ink-2);font-size:15px;font-weight:500;
       }
-      .share-row .btn{min-height:44px;padding:0 14px;flex:none}
+      .btn-link:hover{color:var(--red)}
 
-      /* ---------- Sections ---------- */
-      .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:6px 0 14px}
-      .section-head h2{font-size:22px;margin:0;font-weight:900}
-      .section-head .note{font-size:13px;color:var(--ink-3)}
+      /* ---------- Step 1: find ---------- */
+      .find-card{
+        background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+        box-shadow:var(--shadow);padding:26px 20px 22px;margin-top:26px;
+      }
+      .find-card label{font-size:18px;font-weight:700;display:block;margin-bottom:14px;text-align:center}
+      .date-row{display:flex;gap:12px}
+      .date-row .field{flex:1}
+      .date-row select{
+        width:100%;min-height:64px;border:1.5px solid var(--line);border-radius:12px;
+        background:var(--bg);padding:0 12px;font-size:22px;font-weight:700;text-align:center;
+      }
+      .find-card .btn-primary{margin-top:16px}
+      .find-note{text-align:center;font-size:13px;color:var(--ink-3);margin:14px 0 0}
+
+      /* ---------- Step 2: results ---------- */
+      .view-head{margin-top:26px}
+      .view-head .back-row{margin-bottom:6px}
+      .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 14px}
+      .section-head h2{font-size:26px;margin:0;font-weight:900}
+      .section-head .note{font-size:14px;color:var(--ink-3);flex:none}
       .status{
         border:1px solid var(--line);background:var(--bg-soft);border-radius:10px;
-        padding:12px 14px;font-size:14px;color:var(--ink-2);margin-bottom:14px;display:none;
+        padding:12px 14px;font-size:15px;color:var(--ink-2);margin-bottom:14px;display:none;
       }
       .status.show{display:block}
       .status.error{border-color:var(--red);color:var(--red);background:var(--red-soft)}
       .status.ok{border-color:var(--green);color:var(--green);background:var(--green-soft)}
 
-      /* group insights */
+      .rename-bar{
+        display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+        font-size:14px;color:var(--ink-2);margin-bottom:14px;
+      }
+      .rename-bar .rename-toggle{
+        background:none;border:none;padding:2px 0;cursor:pointer;
+        color:var(--ink-3);font-size:13px;text-decoration:underline;text-underline-offset:3px;
+      }
+      .rename-bar .rename-toggle:hover{color:var(--red)}
+      .rename-edit{display:none;gap:8px;width:100%}
+      .rename-edit.show{display:flex}
+      .rename-edit input{
+        flex:1;min-width:0;min-height:44px;border:1px solid var(--line);border-radius:10px;
+        background:var(--bg);padding:0 12px;font-size:16px;
+      }
+      .rename-edit .btn{min-height:44px;padding:0 16px;flex:none;font-size:15px}
+
       .insights{
         background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
         padding:16px 18px;margin-bottom:18px;display:none;
       }
       .insights.show{display:block}
-      .insights h3{margin:0 0 4px;font-size:16px}
-      .insights p.sub{margin:0 0 10px;font-size:13px;color:var(--ink-3)}
+      .insights h3{margin:0 0 4px;font-size:17px}
+      .insights p.sub{margin:0 0 10px;font-size:13.5px;color:var(--ink-3)}
       .insights ul{margin:0;padding:0;list-style:none}
-      .insights li{padding:8px 0;border-top:1px dashed var(--line);font-size:14.5px}
+      .insights li{padding:8px 0;border-top:1px dashed var(--line);font-size:15.5px}
       .insights li:first-of-type{border-top:none}
-      .insights .who{color:var(--ink-3);font-size:13px}
+      .insights .who{color:var(--ink-3);font-size:13.5px}
 
-      /* person cards */
       .cards{display:grid;gap:16px}
       .person{
         background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
@@ -162,11 +161,11 @@
       }
       .person:nth-child(3n+2) .avatar{background:#7a5c14}
       .person:nth-child(3n) .avatar{background:#2e6b46}
-      .person-name{font-size:17px;font-weight:700;line-height:1.3}
-      .person-meta{font-size:13px;color:var(--ink-3)}
+      .person-name{font-size:18px;font-weight:700;line-height:1.3}
+      .person-meta{font-size:13.5px;color:var(--ink-3)}
       .me-tag{font-size:12px;background:var(--red);color:#fff;border-radius:999px;padding:2px 9px;font-weight:700}
       .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-      .chip{font-size:12.5px;border-radius:999px;padding:3px 10px;font-weight:700;border:1px solid}
+      .chip{font-size:13px;border-radius:999px;padding:3px 10px;font-weight:700;border:1px solid}
       .chip.same-year{color:var(--gold);border-color:var(--gold);background:var(--gold-soft)}
       .chip.same-age{color:var(--red);border-color:var(--red);background:var(--red-soft)}
       .chip.same-born{color:var(--green);border-color:var(--green);background:var(--green-soft)}
@@ -187,61 +186,65 @@
       }
       @media (max-width:480px){.tl-dot{margin-left:7px;margin-right:8px}}
       .tl-body{flex:1;min-width:0}
-      .tl-text{font-size:15px;word-break:break-word}
+      .tl-text{font-size:16px;word-break:break-word}
       .tl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px;align-items:center}
-      .age-badge{font-size:12px;color:var(--ink-2);background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
-      .hit-badge{font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px}
+      .age-badge{font-size:12.5px;color:var(--ink-2);background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+      .hit-badge{font-size:12.5px;font-weight:700;border-radius:999px;padding:1px 8px}
       .hit-badge.year{color:var(--gold);background:var(--gold-soft)}
       .hit-badge.age{color:var(--red);background:var(--red-soft)}
       .timeline li.hit-year .tl-dot{border-color:var(--gold);background:var(--gold-soft)}
       .timeline li.hit-age .tl-dot{border-color:var(--red);background:var(--red-soft)}
       .timeline li.hit-year .tl-year{color:var(--gold)}
       .timeline li.hit-age .tl-year{color:var(--red)}
-      .no-ms{color:var(--ink-3);font-size:14px;margin-top:12px}
+      .no-ms{color:var(--ink-3);font-size:15px;margin-top:12px}
 
       .empty{
         border:1.5px dashed var(--line);border-radius:var(--radius);padding:28px 20px;
         text-align:center;color:var(--ink-2);display:none;background:var(--bg-soft);
       }
       .empty.show{display:block}
-      .empty .big{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px}
-      .skeleton{color:var(--ink-3);font-size:14px;padding:18px 4px;display:none}
+      .empty .big{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:4px}
+      .skeleton{color:var(--ink-3);font-size:15px;padding:18px 4px;display:none}
       .skeleton.show{display:block}
 
-      /* ---------- Form ---------- */
+      .results-actions{margin-top:22px;display:grid;gap:10px}
+      .share-box{margin-top:18px;text-align:center}
+      .share-box .hint{font-size:13px;color:var(--ink-3);margin:10px 0 0}
+
+      /* ---------- Step 3: form ---------- */
       .form-card{
         background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-        box-shadow:var(--shadow);padding:20px;margin-top:30px;
+        box-shadow:var(--shadow);padding:22px 20px;margin-top:26px;
       }
-      .form-card h2{margin:0 0 4px;font-size:22px;font-weight:900}
-      .form-card p.sub{margin:0 0 16px;color:var(--ink-2);font-size:14px}
+      .form-card h2{margin:0 0 4px;font-size:24px;font-weight:900}
+      .form-card p.sub{margin:0 0 18px;color:var(--ink-2);font-size:15px}
       .form-card p.sub strong{color:var(--red)}
-      .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-      @media (max-width:560px){.grid2{grid-template-columns:1fr}}
-      .f-label{font-size:13px;font-weight:700;display:block;margin-bottom:6px}
-      .f-label .opt{color:var(--ink-3);font-weight:400}
+      .f-label{font-size:16px;font-weight:700;display:block;margin-bottom:8px}
+      .f-label .opt{color:var(--ink-3);font-weight:400;font-size:14px}
       .f-input{
-        width:100%;min-height:48px;border:1px solid var(--line);border-radius:10px;
-        background:var(--bg);padding:0 12px;font-size:16px;
+        width:100%;min-height:56px;border:1px solid var(--line);border-radius:10px;
+        background:var(--bg);padding:0 12px;font-size:17px;
       }
       .f-input.invalid{border-color:var(--red);background:var(--red-soft)}
-      .ms-head{display:flex;align-items:baseline;justify-content:space-between;margin:20px 0 8px}
+      .skip-hint{font-size:13.5px;color:var(--ink-3);margin:8px 0 0}
+      .ms-head{display:flex;align-items:baseline;justify-content:space-between;margin:24px 0 8px}
       .ms-head .f-label{margin:0}
-      .ms-count{font-size:12.5px;color:var(--ink-3)}
-      .ms-row{display:flex;gap:8px;margin-bottom:8px}
-      .ms-row .y{width:92px;flex:none}
+      .ms-count{font-size:13px;color:var(--ink-3)}
+      .ms-row{display:flex;gap:8px;margin-bottom:10px}
+      .ms-row .y{width:96px;flex:none}
       .ms-row .t{flex:1;min-width:0}
       .ms-row .del{
-        flex:none;width:44px;min-height:48px;border:1px solid var(--line);border-radius:10px;
-        background:transparent;cursor:pointer;color:var(--ink-3);font-size:17px;line-height:1;
+        flex:none;width:48px;min-height:56px;border:1px solid var(--line);border-radius:10px;
+        background:transparent;cursor:pointer;color:var(--ink-3);font-size:19px;line-height:1;
       }
       .ms-row .del:hover{color:var(--red);border-color:var(--red)}
-      .add-ms{width:100%;margin-top:2px}
-      .form-err{display:none;margin-top:12px;font-size:14px;color:var(--red)}
+      .add-ms{width:100%}
+      .form-err{display:none;margin-top:12px;font-size:15px;color:var(--red)}
       .form-err.show{display:block}
-      .privacy{margin-top:14px;font-size:12.5px;color:var(--ink-3)}
+      .form-actions{display:grid;gap:10px;margin-top:18px}
+      .privacy{margin-top:14px;font-size:12.5px;color:var(--ink-3);text-align:center}
 
-      footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px}
+      footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px;text-align:center}
       @media (prefers-reduced-motion: reduce){
         html{scroll-behavior:auto}
         .btn{transition:none}
@@ -252,96 +255,101 @@
     <div class="wrap">
       <header class="hero">
         <h1 class="serif">同月<span class="accent">同日</span>生</h1>
-        <p class="lead">世界上总有一些人，和你在同一天来到这个世界。选好你的生日，写下人生里几个转折点，看看同一天出生的陌生人，是不是也在同一年、同一个年纪，拐了人生的弯。</p>
-        <div class="steps" aria-hidden="true">
-          <span><b>1</b>选生日</span>
-          <span><b>2</b>写下你的转折点</span>
-          <span><b>3</b>和同日生的人对一对</span>
-        </div>
+        <p class="lead">选好你的生日，先看看同一天出生的人都经历了什么。</p>
       </header>
 
-      <div class="layout">
-        <!-- Left: calendar / picker -->
-        <aside class="cal" aria-label="生日选择">
-          <div class="cal-top serif" id="calMonthLabel">— 月</div>
-          <div class="cal-mid">
-            <div class="cal-day serif" id="calDayLabel">—</div>
-            <div class="cal-sub" id="calSubLabel">选一天，看看谁和你同一天出生</div>
-            <div class="cal-count" id="calCount"></div>
-          </div>
-          <form class="cal-form" id="dateForm">
-            <label for="monthSel">你的生日（不用填年份）</label>
-            <div class="date-row">
-              <div class="field">
-                <select id="monthSel" aria-label="月份"></select>
-              </div>
-              <div class="field">
-                <select id="daySel" aria-label="日期"></select>
-              </div>
+      <!-- Step 1: pick a birthday, nothing else -->
+      <section id="viewFind" aria-label="选生日">
+        <form class="find-card" id="dateForm">
+          <label for="monthSel">你的生日（只选月和日）</label>
+          <div class="date-row">
+            <div class="field">
+              <select id="monthSel" aria-label="月份"></select>
             </div>
-            <button type="submit" class="btn btn-primary" id="loadBtn">看看这一天出生的人</button>
-          </form>
-          <div class="share-box">
-            <p class="hint">把这一天发给朋友，让 TA 也来填一填，填完你们就能互相匹配。选好日期后点下面按钮，这个日期会记进页面地址里，再把页面分享出去，朋友打开就直接是这一天。</p>
-            <button type="button" class="btn btn-ghost" id="markLinkBtn" style="width:100%">把这一天记到链接里</button>
-            <p class="hint" id="markHint" style="margin-top:8px"></p>
+            <div class="field">
+              <select id="daySel" aria-label="日期"></select>
+            </div>
           </div>
-        </aside>
+          <button type="submit" class="btn btn-primary btn-big" id="loadBtn">找同天出生的人</button>
+          <p class="find-note">不用登录，点一下就能看。</p>
+        </form>
+      </section>
 
-        <!-- Right: results + form -->
-        <main>
+      <!-- Step 2: matching results -->
+      <section id="viewResults" hidden aria-label="匹配结果">
+        <div class="view-head">
+          <div class="back-row">
+            <button type="button" class="btn-link" id="backToFindBtn">← 换个生日</button>
+          </div>
           <div class="section-head">
             <h2 class="serif" id="listTitle">这一天出生的人</h2>
             <span class="note" id="listNote"></span>
           </div>
+        </div>
 
-          <div class="status" id="statusBox" role="status"></div>
+        <div class="status" id="statusBox" role="status"></div>
 
-          <section class="insights" id="insightsBox" aria-label="这一天的共同轨迹">
-            <h3 class="serif">这一天的共同轨迹</h3>
-            <p class="sub">不止一个人走到过的年份和年纪，往往就是这一天出生的人共同的坎。</p>
-            <ul id="insightsList"></ul>
-          </section>
+        <div class="rename-bar" id="renameBar" hidden>
+          <span id="renameText">提交好了，你现在是「匿名」。</span>
+          <button type="button" class="rename-toggle" id="renameToggle">换个名字</button>
+          <span class="rename-edit" id="renameEdit">
+            <input id="renameInput" type="text" maxlength="20" placeholder="输入新名字" autocomplete="off" />
+            <button type="button" class="btn btn-ghost" id="renameSave">改好</button>
+          </span>
+        </div>
 
-          <div class="skeleton" id="loadingBox">正在翻这一页日历…</div>
+        <section class="insights" id="insightsBox" aria-label="这一天的共同轨迹">
+          <h3 class="serif">这一天的共同轨迹</h3>
+          <p class="sub">不止一个人走到过的年份和年纪，往往就是这一天出生的人共同的坎。</p>
+          <ul id="insightsList"></ul>
+        </section>
 
-          <div class="empty" id="emptyBox">
-            <div class="big">这一天还没有人留下记录</div>
-            <div>在下面留下你的这一页，你就是这一天的第一个人。朋友填完之后，你们就能对上彼此的转折点。</div>
+        <div class="skeleton" id="loadingBox">正在翻这一页日历…</div>
+
+        <div class="empty" id="emptyBox">
+          <div class="big">这一天还没有人留下记录</div>
+          <div>点下面的按钮留下你的，你就是这一天的第一个人。</div>
+        </div>
+
+        <div class="cards" id="cardsBox"></div>
+
+        <div class="results-actions">
+          <button type="button" class="btn btn-primary btn-big" id="goFormBtn">留下我的这一页</button>
+        </div>
+
+        <div class="share-box">
+          <button type="button" class="btn btn-ghost btn-block" id="markLinkBtn">把这一天记到链接里，发给朋友</button>
+          <p class="hint" id="markHint"></p>
+        </div>
+      </section>
+
+      <!-- Step 3: optional turning points -->
+      <section id="viewForm" hidden aria-label="留下我的记录">
+        <form class="form-card" id="entryForm" novalidate>
+          <div class="back-row">
+            <button type="button" class="btn-link" id="backToResultsBtn">← 先回去看结果</button>
           </div>
+          <h2 class="serif">我的转折点</h2>
+          <p class="sub">正在为 <strong id="formDateLabel">—</strong> 留记录。名字默认就是「匿名」，这一页全都可以跳过。</p>
 
-          <div class="cards" id="cardsBox"></div>
+          <label class="f-label" for="birthYearInput">出生年份 <span class="opt">（可选，可以跳过；填了才能算出「同岁转折」）</span></label>
+          <input class="f-input" id="birthYearInput" type="number" inputmode="numeric" min="1930" max="2026" placeholder="比如：1998，不填也行" />
 
-          <!-- Form -->
-          <section class="form-card" id="formCard" aria-label="留下我的记录">
-            <h2 class="serif">留下我的这一页</h2>
-            <p class="sub">正在为 <strong id="formDateLabel">—</strong> 留记录。不用注册、不用登录，填完直接提交就能和上面的人匹配。</p>
-            <form id="entryForm" novalidate>
-              <div class="grid2">
-                <div>
-                  <label class="f-label" for="nicknameInput">昵称 <span class="opt">（可选，不填就是「匿名」）</span></label>
-                  <input class="f-input" id="nicknameInput" type="text" maxlength="20" placeholder="比如：小满" autocomplete="off" />
-                </div>
-                <div>
-                  <label class="f-label" for="birthYearInput">出生年份 <span class="opt">（可选，填了才能算出「同岁转折」）</span></label>
-                  <input class="f-input" id="birthYearInput" type="number" inputmode="numeric" min="1930" max="2026" placeholder="比如：1998" />
-                </div>
-              </div>
+          <div class="ms-head">
+            <label class="f-label">人生转折点 <span class="opt">（可选，年份 + 一句话）</span></label>
+            <span class="ms-count" id="msCount"></span>
+          </div>
+          <div id="msRows"></div>
+          <button type="button" class="btn btn-ghost add-ms" id="addMsBtn">＋ 再加一条</button>
 
-              <div class="ms-head">
-                <label class="f-label">我的人生转折点 <span class="opt">（年份 + 一句话）</span></label>
-                <span class="ms-count" id="msCount"></span>
-              </div>
-              <div id="msRows"></div>
-              <button type="button" class="btn btn-ghost add-ms" id="addMsBtn">＋ 再加一条转折点</button>
-
-              <p class="form-err" id="formErr"></p>
-              <button type="submit" class="btn btn-primary" id="submitBtn" style="margin-top:16px">提交，和同日生的人对一对</button>
-              <p class="privacy">只会提交你上面填的这些：月、日、昵称、出生年份和转折点。别写手机号、真实姓名这类敏感信息——提交后同一天出生的人都能看到你这一页。</p>
-            </form>
-          </section>
-        </main>
-      </div>
+          <p class="form-err" id="formErr"></p>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-big" id="submitBtn">提交，和同日生的人对一对</button>
+            <button type="button" class="btn btn-ghost btn-big" id="skipBtn">先不填，直接提交</button>
+          </div>
+          <p class="privacy">只存月、日和你填的内容，别写手机号、真实姓名。</p>
+        </form>
+      </section>
 
       <footer>
         同月同日生 · 同一天来到世界的人，把各自的转折点放在一起看一看。
@@ -357,10 +365,9 @@
 
         var monthSel = document.getElementById("monthSel");
         var daySel = document.getElementById("daySel");
-        var calMonthLabel = document.getElementById("calMonthLabel");
-        var calDayLabel = document.getElementById("calDayLabel");
-        var calSubLabel = document.getElementById("calSubLabel");
-        var calCount = document.getElementById("calCount");
+        var viewFind = document.getElementById("viewFind");
+        var viewResults = document.getElementById("viewResults");
+        var viewForm = document.getElementById("viewForm");
         var formDateLabel = document.getElementById("formDateLabel");
         var listTitle = document.getElementById("listTitle");
         var listNote = document.getElementById("listNote");
@@ -370,13 +377,19 @@
         var loadingBox = document.getElementById("loadingBox");
         var emptyBox = document.getElementById("emptyBox");
         var cardsBox = document.getElementById("cardsBox");
+        var renameBar = document.getElementById("renameBar");
+        var renameText = document.getElementById("renameText");
+        var renameEdit = document.getElementById("renameEdit");
+        var renameInput = document.getElementById("renameInput");
 
         var state = {
           month: null,
           day: null,
           entries: [],
           myEntry: null,      // the entry object I submitted most recently (matched by id after reload)
+          myName: "匿名",     // nickname defaults to 匿名; only changed via the post-submit rename entry
           myDraft: null,      // {nickname, birthYear, milestones:[{year,text}]} from my form, used for matching before/without id
+          myPendingMatch: null,
           loading: false
         };
 
@@ -385,7 +398,6 @@
           if ([4, 6, 9, 11].indexOf(m) >= 0) return 30;
           return 31;
         }
-        function pad(n) { return n < 10 ? "0" + n : "" + n; }
         function esc(s) {
           return String(s == null ? "" : s)
             .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -426,6 +438,14 @@
           return a >= 0 && a <= 110 ? a : null;
         }
 
+        /* ---------- views ---------- */
+        function showView(name) {
+          viewFind.hidden = name !== "find";
+          viewResults.hidden = name !== "results";
+          viewForm.hidden = name !== "form";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
         /* ---------- selectors ---------- */
         function buildSelectors() {
           var mHtml = "";
@@ -447,9 +467,6 @@
         function syncCalendar() {
           var d = selectedDate();
           state.month = d.month; state.day = d.day;
-          calMonthLabel.textContent = d.month + " 月";
-          calDayLabel.textContent = d.day;
-          calSubLabel.textContent = d.month + "月" + d.day + "日 · 同一天来到世界的人";
           formDateLabel.textContent = d.month + " 月 " + d.day + " 日";
           listTitle.textContent = d.month + "月" + d.day + "日出生的人";
           document.getElementById("markHint").textContent = "";
@@ -470,7 +487,8 @@
         function myProfile() {
           // Prefer the submitted entry; fall back to what is currently typed in the form.
           if (state.myEntry) return state.myEntry;
-          return readFormDraft(true);
+          if (state.myDraft) return state.myDraft;
+          return readFormDraft();
         }
         function computeMatches(me, other) {
           var res = { sameBorn: false, sameYear: [], sameAge: [] };
@@ -496,9 +514,6 @@
         /* ---------- rendering ---------- */
         function render() {
           var entries = state.entries;
-          calCount.innerHTML = entries.length
-            ? "这一天已有 <strong>" + entries.length + "</strong> 个人留下记录"
-            : "";
           listNote.textContent = entries.length ? "共 " + entries.length + " 人" : "";
           loadingBox.classList.remove("show");
           emptyBox.classList.toggle("show", entries.length === 0 && !state.loading);
@@ -516,9 +531,7 @@
           matches.sameAge.forEach(function (a) { hitAges[a] = true; });
 
           var chips = "";
-          if (mine) {
-            chips = '<span class="me-tag">这是我</span>';
-          } else if (me && (me.milestones && me.milestones.length || me.birthYear)) {
+          if (!mine && me && (me.milestones && me.milestones.length || me.birthYear)) {
             var parts = [];
             if (matches.sameBorn) parts.push('<span class="chip same-born">同年出生 · 都是 ' + e.birthYear + ' 年</span>');
             if (matches.sameYear.length) parts.push('<span class="chip same-year">同一年转折 × ' + matches.sameYear.length + '</span>');
@@ -633,7 +646,7 @@
         }
         function refreshMsUi() {
           var rows = msRows.querySelectorAll(".ms-row");
-          msCount.textContent = "已加 " + rows.length + " 条 / 最多 " + MAX_MS + " 条";
+          msCount.textContent = rows.length + " 条 / 最多 " + MAX_MS + " 条";
           addMsBtn.style.display = rows.length >= MAX_MS ? "none" : "";
           rows.forEach(function (r) {
             r.querySelector(".del").style.visibility = rows.length > 1 ? "visible" : "hidden";
@@ -653,20 +666,19 @@
           var btn = ev.target.closest ? ev.target.closest(".del") : null;
           if (!btn) return;
           var row = btn.closest(".ms-row");
-          if (row && msRows.querySelectorAll(".ms-row").length > 1) { row.remove(); refreshMsUi(); render(); }
+          if (row && msRows.querySelectorAll(".ms-row").length > 1) { row.remove(); refreshMsUi(); }
         });
-        msRows.addEventListener("input", function () { render(); });
         addMsBtn.addEventListener("click", function () {
           addMsRow();
           var rows = msRows.querySelectorAll(".ms-row");
           var last = rows[rows.length - 1];
           if (last) last.querySelector(".y").focus();
         });
-        function readFormDraft(loose) {
+        function readFormDraft() {
           var by = parseInt(document.getElementById("birthYearInput").value, 10);
           var draft = {
             id: state.myEntry ? state.myEntry.id : "",
-            nickname: document.getElementById("nicknameInput").value.trim() || "匿名",
+            nickname: state.myName,
             birthYear: isNaN(by) ? null : by,
             milestones: []
           };
@@ -677,25 +689,14 @@
           });
           return draft;
         }
-
-        /* ---------- submit ---------- */
-        var entryForm = document.getElementById("entryForm");
-        var formErr = document.getElementById("formErr");
-        var submitBtn = document.getElementById("submitBtn");
-        function showFormErr(msg) {
-          formErr.textContent = msg || "";
-          formErr.classList.toggle("show", !!msg);
+        function readBirthYear() {
+          var raw = document.getElementById("birthYearInput").value.trim();
+          if (raw === "") return { ok: true, value: null };
+          var by = parseInt(raw, 10);
+          if (isNaN(by) || by < YEAR_MIN || by > YEAR_MAX) return { ok: false, value: null };
+          return { ok: true, value: by };
         }
-        entryForm.addEventListener("submit", function (ev) {
-          ev.preventDefault();
-          showFormErr("");
-          var d = selectedDate();
-          var byRaw = document.getElementById("birthYearInput").value.trim();
-          var by = byRaw === "" ? null : parseInt(byRaw, 10);
-          if (byRaw !== "" && (isNaN(by) || by < YEAR_MIN || by > YEAR_MAX)) {
-            showFormErr("出生年份填 " + YEAR_MIN + " 到 " + YEAR_MAX + " 之间的数字，或者留空。");
-            return;
-          }
+        function readMilestones(by) {
           var milestones = [];
           var bad = false;
           msRows.querySelectorAll(".ms-row").forEach(function (row) {
@@ -709,17 +710,30 @@
             if (by && y < by) { yEl.classList.add("invalid"); bad = true; return; }
             milestones.push({ year: y, text: tv });
           });
-          if (bad) {
-            showFormErr("转折点里有没填完整的：年份要在 " + YEAR_MIN + "–" + YEAR_MAX + " 之间、不能早于出生年份，内容也要写上；整行留空则会忽略。");
-            return;
-          }
+          if (bad) return null;
           milestones.sort(function (a, b) { return a.year - b.year; });
-          if (milestones.length > MAX_MS) milestones = milestones.slice(0, MAX_MS);
-          var nickname = document.getElementById("nicknameInput").value.trim() || "匿名";
-          var payload = { month: d.month, day: d.day, nickname: nickname, birthYear: by || "", milestones: milestones };
+          return milestones.slice(0, MAX_MS);
+        }
 
-          submitBtn.disabled = true;
-          submitBtn.textContent = "正在留下这一页…";
+        /* ---------- submit ---------- */
+        var entryForm = document.getElementById("entryForm");
+        var formErr = document.getElementById("formErr");
+        var submitBtn = document.getElementById("submitBtn");
+        var skipBtn = document.getElementById("skipBtn");
+        function showFormErr(msg) {
+          formErr.textContent = msg || "";
+          formErr.classList.toggle("show", !!msg);
+        }
+        function setSubmitting(on) {
+          submitBtn.disabled = on;
+          skipBtn.disabled = on;
+          submitBtn.textContent = on ? "正在留下这一页…" : "提交，和同日生的人对一对";
+        }
+        function doSubmit(milestones, by) {
+          var d = selectedDate();
+          var nickname = state.myName || "匿名";
+          var payload = { month: d.month, day: d.day, nickname: nickname, birthYear: by || "", milestones: milestones };
+          setSubmitting(true);
           fetch(API, {
             method: "POST",
             headers: { "Content-Type": "text/plain" },
@@ -734,49 +748,84 @@
               return loadEntries(d.month, d.day, { silent: true });
             })
             .then(function () {
-              submitBtn.disabled = false;
-              submitBtn.textContent = "提交，和同日生的人对一对";
+              setSubmitting(false);
+              showView("results");
+              renameBar.hidden = false;
+              renameText.textContent = "提交好了，你现在是「" + nickname + "」。";
               if (state.myEntry) {
                 showStatus("提交好了，你就是 " + d.month + "月" + d.day + "日这一页上的人了。下面标红、标金的，就是和你撞上的年份和年纪。", "ok");
               } else {
-                showStatus("已经提交，列表正在刷新。如果还没看到你这一页，稍等几秒再点一次「看看这一天出生的人」。", "ok");
-                if (!state.myEntry) {
-                  // fall back to draft-based matching so highlights still work
-                  state.myEntry = null;
-                }
+                showStatus("已经提交，列表正在刷新。如果还没看到你这一页，稍等几秒再点一次「找同天出生的人」。", "ok");
               }
-              document.getElementById("listTitle").scrollIntoView({ behavior: "smooth", block: "start" });
             })
             .catch(function () {
-              submitBtn.disabled = false;
-              submitBtn.textContent = "提交，和同日生的人对一对";
-              showFormErr("提交后刷新列表失败，可能是网络问题。先别重复提交，点上面「看看这一天出生的人」确认一下有没有你这一页。");
+              setSubmitting(false);
+              showFormErr("提交后刷新列表失败，可能是网络问题。先别重复提交，回去看看列表里有没有你这一页。");
             });
+        }
+        entryForm.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          showFormErr("");
+          var byr = readBirthYear();
+          if (!byr.ok) {
+            showFormErr("出生年份填 " + YEAR_MIN + " 到 " + YEAR_MAX + " 之间的数字，或者直接留空跳过。");
+            return;
+          }
+          var milestones = readMilestones(byr.value);
+          if (milestones === null) {
+            showFormErr("转折点里有没填完整的：年份要在 " + YEAR_MIN + "–" + YEAR_MAX + " 之间、不能早于出生年份，内容也要写上；整行留空则会忽略。不想填就点「先不填，直接提交」。");
+            return;
+          }
+          doSubmit(milestones, byr.value);
+        });
+        skipBtn.addEventListener("click", function () {
+          showFormErr("");
+          var byr = readBirthYear();
+          if (!byr.ok) {
+            showFormErr("出生年份填 " + YEAR_MIN + " 到 " + YEAR_MAX + " 之间的数字，或者直接留空跳过。");
+            return;
+          }
+          doSubmit([], byr.value);
         });
 
-        /* ---------- date form / picker ---------- */
+        /* ---------- rename (only after a successful submit) ---------- */
+        document.getElementById("renameToggle").addEventListener("click", function () {
+          renameEdit.classList.add("show");
+          renameInput.value = state.myName === "匿名" ? "" : state.myName;
+          renameInput.focus();
+        });
+        document.getElementById("renameSave").addEventListener("click", function () {
+          var name = renameInput.value.trim() || "匿名";
+          state.myName = name;
+          if (state.myEntry) {
+            state.myEntry.nickname = name;
+            for (var i = 0; i < state.entries.length; i++) {
+              if (state.myEntry.id && state.entries[i].id === state.myEntry.id) state.entries[i].nickname = name;
+            }
+          }
+          if (state.myDraft) state.myDraft.nickname = name;
+          renameText.textContent = "提交好了，你现在是「" + name + "」。";
+          renameEdit.classList.remove("show");
+          render();
+        });
+
+        /* ---------- navigation ---------- */
         document.getElementById("dateForm").addEventListener("submit", function (ev) {
           ev.preventDefault();
           var d = selectedDate();
           state.myEntry = null;
+          state.myDraft = null;
+          renameBar.hidden = true;
           syncCalendar();
+          showView("results");
           loadEntries(d.month, d.day).catch(function () {});
         });
         monthSel.addEventListener("change", function () {
           rebuildDays(daysInMonth(parseInt(monthSel.value, 10)), parseInt(daySel.value, 10));
-          var d = selectedDate();
-          state.myEntry = null;
-          syncCalendar();
-          loadEntries(d.month, d.day).catch(function () {});
         });
-        daySel.addEventListener("change", function () {
-          var d = selectedDate();
-          state.myEntry = null;
-          syncCalendar();
-          loadEntries(d.month, d.day).catch(function () {});
-        });
-        document.getElementById("birthYearInput").addEventListener("input", function () { render(); });
-        document.getElementById("nicknameInput").addEventListener("input", function () { render(); });
+        document.getElementById("backToFindBtn").addEventListener("click", function () { showView("find"); });
+        document.getElementById("goFormBtn").addEventListener("click", function () { showView("form"); });
+        document.getElementById("backToResultsBtn").addEventListener("click", function () { showView("results"); });
 
         /* ---------- dated link (?m=&d=) ---------- */
         document.getElementById("markLinkBtn").addEventListener("click", function () {
@@ -798,15 +847,22 @@
         var params = new URLSearchParams(window.location.search);
         var pm = parseInt(params.get("m"), 10), pd = parseInt(params.get("d"), 10);
         var now = new Date();
-        var initM = (!isNaN(pm) && pm >= 1 && pm <= 12) ? pm : (now.getMonth() + 1);
-        var initD = (!isNaN(pd) && pd >= 1 && pd <= daysInMonth(initM)) ? pd : Math.min(now.getDate(), daysInMonth(initM));
+        var hasParams = !isNaN(pm) && pm >= 1 && pm <= 12 && !isNaN(pd) && pd >= 1 && pd <= daysInMonth(pm);
+        var initM = hasParams ? pm : (now.getMonth() + 1);
+        var initD = hasParams ? pd : Math.min(now.getDate(), daysInMonth(initM));
         monthSel.value = initM;
         rebuildDays(daysInMonth(initM), initD);
         daySel.value = initD;
         syncCalendar();
-        addMsRow(); addMsRow(); addMsRow();
+        addMsRow();
         refreshMsUi();
-        loadEntries(initM, initD).catch(function () {});
+        if (hasParams) {
+          // Shared link: land directly on that day's results.
+          showView("results");
+          loadEntries(initM, initD).catch(function () {});
+        } else {
+          showView("find");
+        }
       })();
     </script>
   </body>
